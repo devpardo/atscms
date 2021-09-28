@@ -1,28 +1,10 @@
 <template>
-  <v-dialog v-model="status">
-    <v-card v-if="type == 'error'">
-      <v-card-title class="text-h5 grey lighten-2">
-        Error
-      </v-card-title>
-
-      <v-card-text>
-        {{errMessage}}
-      </v-card-text>
-
-      <v-divider></v-divider>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-          color="primary"
-          text
-          @click="removeErrors"
-        >
-          Ok
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+  <b-modal id="modal" v-model="showModal" hide-header no-close-on-backdrop no-close-on-esc>
+    {{message}}
+    <template #modal-footer>
+      <b-button @click="removeErrors">Okay</b-button>
+    </template>
+  </b-modal>
 </template>
 
 <script>
@@ -31,27 +13,35 @@ export default {
   name : 'AlertComponents',
   computed : {
     ...mapGetters(['hasError']),
-    status() {
-      return this.hasError.status || false;
-    },
-    errMessage() {
-      return this.hasError.errorMessage || '';
+    showModal : {
+      get () {
+        return this.hasError.status
+      },
+      set () {
+        this.addErrors('');
+      }
     }
   },
   methods : {
     ...mapActions(['addErrors']),
     removeErrors() {
-      this.addErrors('');
+      this.$bvModal.hide('modal');
     }
+  },
+  mounted () {
   },
   props : {
     show : {
       type : Boolean,
-      required : false
+      required : true
     },
     type : {
       type : String, 
-      required : true
+      required : false
+    },
+    message : {
+      type : String, 
+      required : false
     }
   }
 }

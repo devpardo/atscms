@@ -1,13 +1,12 @@
 <template>
   <div class="mt-5">
-    <h3>Dashboard</h3>
+    <h3>Announcements</h3>
   </div>
 </template>
 
 <script>
 export default {
-  name : 'Management',
-  components : {}
+  name : 'Announcements'
 }
 </script>
 

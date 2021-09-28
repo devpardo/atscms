@@ -9,6 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token : localStorage.getItem('accessToken') || null,
+    userid : localStorage.getItem('user') || null,
     error : {
       status : false,
       errorMessage : ''
@@ -29,6 +30,15 @@ export default new Vuex.Store({
     hasError(state, val) {
       state.error.status = val.status;
       state.error.errorMessage = val.errorMessage;
+    },
+    destroyToken(state) {
+      state.token = null;
+    },
+    removeUser(state) {
+      state.userid = null;
+    },
+    storeUser(state) {
+      state.userid = state;
     }
   },
   actions,
